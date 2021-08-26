@@ -10,7 +10,9 @@ import {
   Text, 
   FormControl, 
   FormLabel, 
-  FormHelperText, } from '@chakra-ui/react'
+  FormHelperText,
+  InputLeftAddon,
+  InputGroup, } from '@chakra-ui/react'
 
 import {Logo} from '../components'
 import firebase from '../config/firebase'
@@ -18,6 +20,7 @@ import firebase from '../config/firebase'
 const validationSchema = yup.object().shape({
   email: yup.string().email('Email inválido').required('Preenchimento obrigatório'),
   password: yup.string().required('Preenchimento obrigatório'),
+  username: yup.string().required('Preenchimento obrigatório'),
 })
 
 export default function Home() {
@@ -31,7 +34,7 @@ export default function Home() {
     isSubmitting} = useFormik ({
     onSubmit: async (values, form) => {
       try {
-        const user = await firebase.auth().signInWithEmailAndPassword(values.email, values.password)
+        const user = await firebase.auth().createUserWithEmailAndPassword(values.email, values.password)
         console.log('user: ', user)
       }
       catch(error) {
@@ -67,10 +70,19 @@ export default function Home() {
             {touched.password && <FormHelperText textColor='#e74c3c'>{errors.password}</FormHelperText>}
           </FormControl>
 
-          <Button width="100%" mt={4} onClick={handleSubmit} isLoading={isSubmitting}>Entrar</Button>
+          <FormControl id="username" p={4} isRequired>
+            <InputGroup size='lg'>
+              <InputLeftAddon children="clocker.work/" />
+              <Input size="lg" type="username" value={values.username} onChange={handleChange} onBlur={handleBlur}/> 
+            </InputGroup>
+
+            {touched.username && <FormHelperText textColor='#e74c3c'>{errors.username}</FormHelperText>}
+          </FormControl>
+
+          <Button width="100%" mt={4} onClick={handleSubmit} isLoading={isSubmitting}>Cadastrar</Button>
         </Box>
 
-        <Link href='/signup'>Ainda não tem uma conta? Cadastre-se</Link>
+        <Link href='/'>Já tem uma conta? Acesse-a</Link>
     </Container>
   )
 }

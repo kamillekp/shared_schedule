@@ -14,9 +14,8 @@ import {
   InputLeftAddon,
   InputGroup, } from '@chakra-ui/react'
 
-import {Logo} from '../components'
-import firebase from '../config/firebase'
-
+import {Logo, useAuth} from '../components'
+ 
 const validationSchema = yup.object().shape({
   email: yup.string().email('Email inválido').required('Preenchimento obrigatório'),
   password: yup.string().required('Preenchimento obrigatório'),
@@ -24,6 +23,8 @@ const validationSchema = yup.object().shape({
 })
 
 export default function Home() {
+  const [, {signup}] = useAuth()
+
   const {
     values, 
     errors, 
@@ -32,15 +33,7 @@ export default function Home() {
     handleBlur, 
     handleSubmit,
     isSubmitting} = useFormik ({
-    onSubmit: async (values, form) => {
-      try {
-        const user = await firebase.auth().createUserWithEmailAndPassword(values.email, values.password)
-        console.log('user: ', user)
-      }
-      catch(error) {
-        console.log(error)
-      }
-    },
+    onSubmit: signup,
     validationSchema,
     initialValues: {
       email: '',

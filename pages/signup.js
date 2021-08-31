@@ -1,4 +1,6 @@
 import Link from 'next/link'
+import {useRouter} from 'next/router'
+import {useEffect} from 'react'
 import {useFormik} from 'formik'
 import * as yup from 'yup'
 
@@ -23,7 +25,8 @@ const validationSchema = yup.object().shape({
 })
 
 export default function Home() {
-  const [, {signup}] = useAuth()
+  const [auth, {signup}] = useAuth()
+  const router = useRouter()
 
   const {
     values, 
@@ -41,6 +44,10 @@ export default function Home() {
       password: ''
     }
   })
+
+  useEffect(() => {
+    auth.user && router.push('/agenda')
+  }, [auth.user])
 
   return (
     <Container p={20} centerContent>

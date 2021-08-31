@@ -13,8 +13,8 @@ export const login = async ({email, password}) => {
     firebase.auth().setPersistence(persistenceMode)
 
     try {
-        const user = await firebase.auth().signInWithEmailAndPassword(email, password)
-        console.log('LOGIN USER: ', user)
+        await firebase.auth().signInWithEmailAndPassword(email, password)
+        return firebase.auth().currentUser
     }
     catch(error) {
         console.log('LOGIN ERROR: ', error)
@@ -23,24 +23,20 @@ export const login = async ({email, password}) => {
 
 export const signup = async ({email, password, username}) => {
     try {
-        const user = await firebase.auth( ).createUserWithEmailAndPassword(email, password)
-        await login({email, password})
+        await firebase.auth( ).createUserWithEmailAndPassword(email, password)
+        const user = await login({email, password})
+        const token = await user.getIdToken()
 
-        console.log('SIGNUP USER: ', user)
-        //setupProfile({token, username})
-
-        /*const {data} = await axios({
+        const {data} = await axios({
             method: 'post',
             url: '/api/profile',
-            data: {
-              username: values.username
-            },
-            header: {
-              'Authentication': `Bearer ${user.getToken()}` 
+            data: {username},
+            headers: {
+              'Authorization': `Bearer ${token}` 
             }
-          })
+        })
   
-          console.log('Signup User: ', data)*/
+        console.log('Signup User: ', data)
     }
     catch (error) {
         console.log('SIGNUP ERROR: ', error)

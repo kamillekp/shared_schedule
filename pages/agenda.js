@@ -8,15 +8,20 @@ import {ChevronLeftIcon, ChevronRightIcon} from '@chakra-ui/icons'
 import {Container, Box, Button, IconButton} from '@chakra-ui/react'
 
 import {useAuth, Logo, formatDate} from '../components'
+import {getToken} from '../config/firebase/index.js'
 
-const getAgenda = (when) => axios({
-  method: 'get',
-  url: '/api/agenda',
-  params: {when},
-  /*headers: {
-    Authorization: `bearer ${token}`
-  }*/
-})
+const getAgenda = async (when) => {
+  const token = await getToken()
+
+  return axios({
+    method: 'get',
+    url: '/api/agenda',
+    params: {when},
+    headers: {
+      Authorization: `bearer ${token}`
+    }
+  })
+}
 
 const Header = ({children}) => (
   <Box p={4} display='flex' alignItems='center' justifyContent='space-between'>

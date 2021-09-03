@@ -6,7 +6,7 @@ const agenda = db.collection('agenda')
 export default async (req, res) => {
     const [, token] = req.headers.authorization.split(' ')
 
-    if(!req.headers.authorization) {
+    if(!token) {
         return res.sattus(401)
     }
 

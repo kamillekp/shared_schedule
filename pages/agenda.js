@@ -1,8 +1,8 @@
 import {useEffect, useState} from 'react'
 import {useRouter} from 'next/router'
 import {useFetch} from '@refetty/react'
-import axios from 'axios'
 import {addDays, subDays} from 'date-fns'
+import axios from 'axios'
 
 import {ChevronLeftIcon, ChevronRightIcon} from '@chakra-ui/icons'
 import {Container, Box, Button, IconButton} from '@chakra-ui/react'

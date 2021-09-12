@@ -11,15 +11,15 @@ import {
     ModalFooter,
     ModalBody,
     ModalCloseButton,
-    Input,
   } from "@chakra-ui/react"
 
+import {Input} from '../Input'
   
 const ModalTimeBlock = ({isOpen, onClose, onComplete, children}) => (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Modal Title</ModalHeader>
+        <ModalHeader>Faça sua reserva</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           {children}
@@ -39,10 +39,8 @@ export const TimeBlock = ({time}) => {
     const [isOpen, setIsOpen] = useState(false)
     const toggle = () => setIsOpen(prevState => !prevState)
 
-    const {values, handleSubmit, handleChange} = useFormik({
-      onSubmit: () => {
-  
-      },
+    const {values, handleSubmit, handleChange, handleBlur, errors, touched} = useFormik({
+      onSubmit: () => {},
       initialValues: {
         name: '',
         phone: '',
@@ -59,8 +57,29 @@ export const TimeBlock = ({time}) => {
 
             <ModalTimeBlock isOpen={isOpen} onClose={toggle} onComplete={handleSubmit}>
               <>
-                <Input name='name' value={values.name} onChange={handleChange} placeholder='Digite seu nome' size='lg' />
-                <Input name='phone' value={values.phone} onChange={handleChange} placeholder='(99) 9 9999-9999' size='lg' mt={4} />
+                <Input 
+                  label='Nome: '
+                  name='name' 
+                  touched={touched.name}
+                  error={errors.name}
+                  value={values.name} 
+                  onChange={handleChange} 
+                  placeholder='Digite seu nome' 
+                  onBlur={handleBlur}
+                  size='lg' 
+                />
+
+                <Input 
+                  label='telefone'
+                  name='phone' 
+                  error= {errors.phone}
+                  value={values.phone} 
+                  onChange={handleChange} 
+                  placeholder='(99) 9 9999-9999'
+                  onBlur={handleBlur} 
+                  size='lg' 
+                  mt={4} 
+                />
               </>
             </ModalTimeBlock>
         </Button>

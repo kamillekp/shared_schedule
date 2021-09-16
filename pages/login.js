@@ -67,7 +67,7 @@ export default function Login() {
             {touched.password && <FormHelperText textColor='#e74c3c'>{errors.password}</FormHelperText>}
           </FormControl>
 
-          <Button width="100%" mt={4} onClick={handleSubmit} isLoading={isSubmitting} bg='blue'>Entrar</Button>
+          <Button width="100%" mt={4} onClick={handleSubmit} isLoading={isSubmitting} bg='blue' color='white'>Entrar</Button>
         </Box>
 
         <Link href='/signup'>Ainda não tem uma conta? Cadastre-se</Link>

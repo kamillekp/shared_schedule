@@ -10,11 +10,11 @@ const startAt = new Date(2021, 1, 1, 8, 0)
 const endAt = new Date(2021, 1, 1, 17, 0)
 const totalHours = differenceInHours(endAt, startAt)
 
-const timeBlocks = []
+const blocksList = []
 
 for(let blockIndex=0; blockIndex<=totalHours; blockIndex++) {
     const time = format(addHours(startAt, blockIndex), 'HH:mm')
-    timeBlocks.push(time)
+    blocksList.push(time)
 }
 
 const getUserId = async (username) => {
@@ -49,14 +49,25 @@ const setSchedule = async (req, res) => {
     return res.status(200).json(block)
 }
 
-const getSchedule = (req, res) => {
+const getSchedule = async (req, res) => {
     try {
-        /* const snapshot = await agenda
-            .where('user_id', '==', profileDoc.userId)
-            .where('when', '==', req.query.when)
+        const userId = await getUserId(req.query.username)
+
+        const snapshot = await agenda
+            .where('userId', '==', userId)
+            .where('date', '==', req.query.date)
             .get()
-        */
-        return res.status(200).json(timeBlocks)
+
+            //console.log(snapshot)
+
+        const docs = snapshot.docs.map(doc => doc.data())
+
+        const result = blocksList.map(time => ({
+            time,
+            isBlocked: !!docs.find(doc => doc.time === time) 
+        }))
+
+        return res.status(200).json(result)
     }
     catch (error) {
         console.log('FB ERROR: ', error)

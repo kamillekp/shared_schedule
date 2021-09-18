@@ -46,7 +46,7 @@ const ModalTimeBlock = ({isOpen, onClose, onComplete, isSubmitting, children}) =
     </Modal>
   )
   
-export const TimeBlock = ({time, date}) => {
+export const TimeBlock = ({time, date, disabled}) => {
     const [isOpen, setIsOpen] = useState(false)
     const toggle = () => setIsOpen(prevState => !prevState)
 
@@ -71,10 +71,10 @@ export const TimeBlock = ({time, date}) => {
     })
     
     return (
-        <Button p={8} width={200} color='white' bg='blue' onClick={toggle} >
+        <Button p={8} width={200} color='white' bg='blue' onClick={toggle} disabled={disabled} >
             {time}
 
-            <ModalTimeBlock 
+            {!disabled && <ModalTimeBlock 
               isOpen={isOpen} 
               onClose={toggle} 
               onComplete={handleSubmit} 
@@ -108,7 +108,7 @@ export const TimeBlock = ({time, date}) => {
                   disabled={isSubmitting /*=== true ? 1 : 0*/}
                 />
               </>
-            </ModalTimeBlock>
+            </ModalTimeBlock>}
         </Button>
     )
 }

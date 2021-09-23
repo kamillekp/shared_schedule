@@ -98,6 +98,7 @@ export const TimeBlock = ({time, date, disabled}) => {
                 <Input 
                   label='telefone'
                   name='phone' 
+                  mask={['(99) 9999-9999', '(99) 9 9999-9999']}
                   error= {errors.phone}
                   value={values.phone} 
                   onChange={handleChange} 

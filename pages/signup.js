@@ -79,7 +79,7 @@ export default function Home() {
             {touched.username && <FormHelperText textColor='#e74c3c'>{errors.username}</FormHelperText>}
           </FormControl>
 
-          <Button width="100%" mt={4} onClick={handleSubmit} isLoading={isSubmitting} bbg='blue' color='white'>Cadastrar</Button>
+          <Button width="100%" mt={4} onClick={handleSubmit} isLoading={isSubmitting} bg='blue' color='white'>Cadastrar</Button>
         </Box>
 
         <Link href='/'>Já tem uma conta? Acesse-a</Link>

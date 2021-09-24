@@ -6,7 +6,7 @@ import {format} from 'date-fns'
 import axios from 'axios'
 
 import {ChevronLeftIcon, ChevronRightIcon} from '@chakra-ui/icons'
-import {Container, Box, IconButton, SimpleGrid, Spinner} from '@chakra-ui/react'
+import {Container, Box, IconButton, SimpleGrid, Spinner, Button} from '@chakra-ui/react'
 
 import {Logo, formatDate, TimeBlock} from '../components'
 
@@ -35,6 +35,8 @@ export default function Schedule() {
 
     const refresh = () => fetch({when, username: router.query.username})
 
+    const toAgenda = () => {router.push('/agenda')}
+
     useEffect(() => {
       refresh()
     }, [when, router.query.username])
@@ -43,7 +45,8 @@ export default function Schedule() {
     return (
       <Container>
           <Header>
-            <Logo size={150}/>
+            <Logo size={150} />
+            <Button onClick={toAgenda}>Home</Button>
           </Header>
 
           <Box m={8} display='flex' alignItems='center' justifyContent='space-between'>

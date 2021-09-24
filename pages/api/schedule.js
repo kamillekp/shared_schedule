@@ -66,8 +66,6 @@ const getSchedule = async (req, res) => {
             .where('date', '==', req.query.date)
             .get()
 
-            //console.log(snapshot)
-
         const docs = snapshot.docs.map(doc => doc.data())
 
         const result = blocksList.map(time => ({

@@ -1,11 +1,11 @@
 import {useEffect, useState} from 'react'
 import {useRouter} from 'next/router'
 import {useFetch} from '@refetty/react'
-import {addDays, subDays} from 'date-fns'
+import {addDays, subDays, format} from 'date-fns'
 import axios from 'axios'
 
 import {ChevronLeftIcon, ChevronRightIcon} from '@chakra-ui/icons'
-import {Container, Box, Button, IconButton} from '@chakra-ui/react'
+import {Container, Box, Button, IconButton, Spinner, Text} from '@chakra-ui/react'
 
 import {useAuth, Logo, formatDate} from '../components'
 import {getToken} from '../config/firebase/index.js'
@@ -16,7 +16,7 @@ const getAgenda = async (when) => {
   return axios({
     method: 'get',
     url: '/api/agenda',
-    params: {when},
+    params: {date: format(when, 'yyyy-MM-dd')},
     headers: {
       Authorization: `bearer ${token}`
     }
@@ -29,11 +29,22 @@ const Header = ({children}) => (
   </Box>
 )
 
+const AgendaBlock = ({time, name, phone, ...props}) => (
+  <Box {...props} display='flex' alignItems='center' bg='gray.100' borderRadius={8} p={4}>
+    <Box flex={1}>{time}</Box>
+
+    <Box textAlign='right'>
+      <Text fontSize='2xl'>{name}</Text>
+      <Text>{phone}</Text>
+    </Box>
+  </Box>
+)
+
 export default function Agenda() {
     const router = useRouter()
     const [auth, {logout}] = useAuth()
     const [when, setWhen]= useState(() => new Date())
-    const [data, {loading, status, error}, fetch] = useFetch(getAgenda, {lazy: true})
+    const [data, {loading}, fetch] = useFetch(getAgenda, {lazy: true})
     
     const addDay = () => setWhen(prevState => addDays(prevState, 1))
     const removeDay = () => setWhen(prevState => subDays(prevState, 1))
@@ -58,6 +69,12 @@ export default function Agenda() {
             <Box>{formatDate(when, 'PPPP')}</Box>
             <IconButton  icon={<ChevronRightIcon />} bg='transparent' onClick={addDay} />
           </Box>
+
+          {loading && <Spinner tickness='4px' speed='0.65s' emptyColor='gray.200' color='blue.500' size='xl' />}
+          {data?.map(doc => (
+            <AgendaBlock key={doc.time} time={doc.time} name={doc.name} phone={doc.phone} mt={4} />
+          ))}
+
       </Container>
     )
   }

@@ -46,7 +46,7 @@ export default function Schedule() {
       <Container>
           <Header>
             <Logo size={150} />
-            <Button onClick={toAgenda}>Home</Button>
+            <Button onClick={toAgenda} bg='#6020df' color='white'>Home</Button>
           </Header>
 
           <Box m={8} display='flex' alignItems='center' justifyContent='space-between'>
@@ -56,7 +56,7 @@ export default function Schedule() {
           </Box>
 
           <SimpleGrid p={4} columns={2} spacing={8} >
-            {loading && <Spinner tickness='4px' speed='0.65s' emptyColor='gray.200' color='blue.500' size='xl' />}
+            {loading && <Spinner tickness='4px' speed='0.65s' emptyColor='gray.200' color='#6020df' size='xl' />}
             {data?.map (({time, isBlocked}) => <TimeBlock key={time} time={time} date={when} disabled={isBlocked} onSuccess={refresh} />) }
           </SimpleGrid>
       </Container>

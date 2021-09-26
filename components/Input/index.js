@@ -19,7 +19,7 @@ export const Input = ({error, touched, label, onChange, mask: pattern, ...props}
             <FormControl id={props.name} p={4} isRequired>
                 <FormLabel>{label}</FormLabel>
                 <InputBase size="lg" {...props} onChange={pattern ? handleChange : onChange} />
-                {touched && <FormHelperText textColor='#e74c3c'>{error}</FormHelperText>}
+                {touched && <FormHelperText textColor='#df2040'>{error}</FormHelperText>}
             </FormControl>
         </Box>
     )

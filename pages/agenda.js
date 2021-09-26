@@ -30,12 +30,12 @@ const Header = ({children}) => (
 )
 
 const AgendaBlock = ({time, name, phone, ...props}) => (
-  <Box {...props} display='flex' alignItems='center' bg='gray.100' borderRadius={8} p={4}>
-    <Box flex={1}>{time}</Box>
+  <Box {...props} display='flex' alignItems='center' bg='#6020df' color='white' borderRadius={8} p={4}>
+    <Box flex={1} fontSize='xl'>{time}</Box>
 
     <Box textAlign='right'>
-      <Text fontSize='2xl'>{name}</Text>
-      <Text>{phone}</Text>
+      <Text fontSize='lg'>{name}</Text>
+      <Text fontSize='xs'>{phone}</Text>
     </Box>
   </Box>
 )
@@ -49,6 +49,12 @@ export default function Agenda() {
     const addDay = () => setWhen(prevState => addDays(prevState, 1))
     const removeDay = () => setWhen(prevState => subDays(prevState, 1))
 
+    const toSchedule= () =>{
+      const username = localStorage.getItem('username')
+      console.log(username)
+      router.push(`/${username}`)
+    }
+
     useEffect(() => {
       !auth.user && router.push('/')
     }, [auth.user])
@@ -61,7 +67,8 @@ export default function Agenda() {
       <Container>
           <Header>
             <Logo size={150}/>
-            <Button onClick={logout}>Sair</Button>
+            <Button onClick={logout} bg='#6020df' color='white'>Sair</Button>
+            <Button onClick={toSchedule} bg='#6020df' color='white'>Horários</Button>            
           </Header>
 
           <Box m={8} display='flex' alignItems='center' justifyContent='space-between'>
@@ -70,11 +77,10 @@ export default function Agenda() {
             <IconButton  icon={<ChevronRightIcon />} bg='transparent' onClick={addDay} />
           </Box>
 
-          {loading && <Spinner tickness='4px' speed='0.65s' emptyColor='gray.200' color='blue.500' size='xl' />}
-          {data?.map(doc => (
+          {loading && <Spinner tickness='4px' speed='0.65s' emptyColor='gray.200' color='#6020df' size='xl' />}
+          {data ?.map(doc => (
             <AgendaBlock key={doc.time} time={doc.time} name={doc.name} phone={doc.phone} mt={4} />
           ))}
-
       </Container>
     )
   }

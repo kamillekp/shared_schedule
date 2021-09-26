@@ -2,18 +2,25 @@ import * as React from 'react'
 import axios from 'axios'
 import {useState, useEffect, useContext} from "react"
 
-import firebase, {persistenceMode} from '../../config/firebase'
+import firebase, {persistenceMode, getToken} from '../../config/firebase'
 
 
 const AuthContext = React.createContext([{}, () => {}])
 
-export const logout = () => firebase.auth().signOut()
+export const logout = () => {
+    firebase.auth().signOut()
+    localStorage.removeItem('username')
+}
 
 export const login = async ({email, password}) => {
     firebase.auth().setPersistence(persistenceMode)
 
     try {
         await firebase.auth().signInWithEmailAndPassword(email, password)
+
+        const result = (await takeProfile()).username
+        localStorage.setItem('username', result)
+
         return firebase.auth().currentUser
     }
     catch(error) {
@@ -27,7 +34,7 @@ export const signup = async ({email, password, username}) => {
         const user = await login({email, password})
         const token = await user.getIdToken()
 
-        const {data} = await axios({
+        await axios({
             method: 'post',
             url: '/api/profile',
             data: {username},
@@ -35,11 +42,27 @@ export const signup = async ({email, password, username}) => {
               'Authorization': `Bearer ${token}` 
             }
         })
-  
-        console.log('Signup User: ', data)
     }
     catch (error) {
         console.log('SIGNUP ERROR: ', error)
+    }
+}
+
+export const takeProfile = async () => {
+    try {
+        const token = getToken
+        const data = await axios({
+            method: 'get',
+            url: '/api/takeProfile',
+            headers: {
+              'Authorization': `Bearer ${token}` 
+            }
+        })
+
+        return ({username: data.username})
+    }
+    catch (error) {
+        console.log('TAKEPROFILE ERROR: ', error)
     }
 }
 

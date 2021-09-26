@@ -58,16 +58,16 @@ export default function Login() {
           <FormControl id="email" p={4} isRequired>
             <FormLabel>Email</FormLabel>
             <Input size="lg" type="email" value={values.email} onChange={handleChange} onBlur={handleBlur}/>
-            {touched.email && <FormHelperText textColor='#e74c3c'>{errors.email}</FormHelperText>}
+            {touched.email && <FormHelperText textColor='#df2040'>{errors.email}</FormHelperText>}
           </FormControl>
 
           <FormControl id="password" p={4} isRequired>
             <FormLabel>Senha</FormLabel>
             <Input size="lg" type="password" value={values.password} onChange={handleChange} onBlur={handleBlur}/>
-            {touched.password && <FormHelperText textColor='#e74c3c'>{errors.password}</FormHelperText>}
+            {touched.password && <FormHelperText textColor='#df2040'>{errors.password}</FormHelperText>}
           </FormControl>
 
-          <Button width="100%" mt={4} onClick={handleSubmit} isLoading={isSubmitting} bg='blue' color='white'>Entrar</Button>
+          <Button width="100%" mt={4} onClick={handleSubmit} isLoading={isSubmitting} bg='#6020df' color='white'>Entrar</Button>
         </Box>
 
         <Link href='/signup'>Ainda não tem uma conta? Cadastre-se</Link>

@@ -61,13 +61,13 @@ export default function Home() {
           <FormControl id="email" p={4} isRequired>
             <FormLabel>Email</FormLabel>
             <Input size="lg" type="email" value={values.email} onChange={handleChange} onBlur={handleBlur}/>
-            {touched.email && <FormHelperText textColor='#e74c3c'>{errors.email}</FormHelperText>}
+            {touched.email && <FormHelperText textColor='#df2040'>{errors.email}</FormHelperText>}
           </FormControl>
 
           <FormControl id="password" p={4} isRequired>
             <FormLabel>Senha</FormLabel>
             <Input size="lg" type="password" value={values.password} onChange={handleChange} onBlur={handleBlur}/>
-            {touched.password && <FormHelperText textColor='#e74c3c'>{errors.password}</FormHelperText>}
+            {touched.password && <FormHelperText textColor='#df2040'>{errors.password}</FormHelperText>}
           </FormControl>
 
           <FormControl id="username" p={4} isRequired>
@@ -76,10 +76,10 @@ export default function Home() {
               <Input size="lg" type="username" value={values.username} onChange={handleChange} onBlur={handleBlur}/> 
             </InputGroup>
 
-            {touched.username && <FormHelperText textColor='#e74c3c'>{errors.username}</FormHelperText>}
+            {touched.username && <FormHelperText textColor='#df2040'>{errors.username}</FormHelperText>}
           </FormControl>
 
-          <Button width="100%" mt={4} onClick={handleSubmit} isLoading={isSubmitting} bg='blue' color='white'>Cadastrar</Button>
+          <Button width="100%" mt={4} onClick={handleSubmit} isLoading={isSubmitting} bg='#6020df' color='white'>Cadastrar</Button>
         </Box>
 
         <Link href='/'>Já tem uma conta? Acesse-a</Link>

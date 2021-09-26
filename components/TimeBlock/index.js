@@ -30,15 +30,15 @@ const ModalTimeBlock = ({isOpen, onClose, onComplete, isSubmitting, children}) =
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Faça sua reserva</ModalHeader>
+        <ModalHeader color='#260d59'>Faça sua reserva</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           {children}
         </ModalBody>
   
         <ModalFooter>
-            {!isSubmitting && <Button variant='ghost'>Cancelar</Button>}
-            <Button colorScheme='blue' mr={3} onClick={onComplete} isLoading={isSubmitting}>
+            {!isSubmitting && <Button variant='ghost' color='#6020df'>Cancelar</Button>}
+            <Button bg='#6020df' color='white' mr={3} onClick={onComplete} isLoading={isSubmitting}>
                 Reservar Horário
             </Button>
         </ModalFooter>
@@ -72,14 +72,14 @@ export const TimeBlock = ({time, date, disabled, onSuccess}) => {
     })
     
     return (
-        <Button p={8} width={200} color='white' bg='blue' onClick={toggle} disabled={disabled} >
+        <Button p={8} width={200} color='white' bg='#260d59' onClick={toggle} disabled={disabled} >
             {time}
 
             {!disabled && <ModalTimeBlock 
               isOpen={isOpen} 
               onClose={toggle} 
               onComplete={handleSubmit} 
-              isSubmitting={isSubmitting }
+              isSubmitting={isSubmitting}
             >
               
               <>

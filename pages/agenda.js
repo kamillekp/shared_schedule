@@ -23,6 +23,28 @@ const getAgenda = async (when) => {
   })
 }
 
+/*const takeProfile = async () => {
+  try {
+      const router = useRouter()
+      const token = await getToken()
+      console.log('TOKEN: ', token)
+
+      const data = await axios({
+          method: 'get',
+          url: '/api/takeProfile',
+          headers: {
+            Authorization: `Bearer ${token}` 
+          }
+      })
+
+      console.log('DATA: ', data.username)
+      router.push(`/${data.username}`)    
+  }
+  catch (error) {
+      console.log('TAKEPROFILE ERROR: ', error)
+  }
+}*/
+
 const Header = ({children}) => (
   <Box p={4} display='flex' alignItems='center' justifyContent='space-between'>
     {children}
@@ -49,11 +71,7 @@ export default function Agenda() {
     const addDay = () => setWhen(prevState => addDays(prevState, 1))
     const removeDay = () => setWhen(prevState => subDays(prevState, 1))
 
-    const toSchedule= () =>{
-      const username = localStorage.getItem('username')
-      console.log(username)
-      router.push(`/${username}`)
-    }
+    //const toSchedule = () => takeProfile()
 
     useEffect(() => {
       !auth.user && router.push('/')
@@ -68,7 +86,7 @@ export default function Agenda() {
           <Header>
             <Logo size={150}/>
             <Button onClick={logout} bg='#6020df' color='white'>Sair</Button>
-            <Button onClick={toSchedule} bg='#6020df' color='white'>Horários</Button>            
+            <Button /*onClick={toSchedule}*/ bg='#6020df' color='white'>Horários</Button>            
           </Header>
 
           <Box m={8} display='flex' alignItems='center' justifyContent='space-between'>

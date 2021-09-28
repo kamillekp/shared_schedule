@@ -7,12 +7,15 @@ export default async (req, res) => {
 
   const [, token] = req.headers.authorization.split(' ')
   const {user_id} = await firebaseServer.auth().verifyIdToken(token)
+
+  console.log('TOKEN TP: ', token)
+  console.log('USER: ', user_id)
   
-  const name = profile.doc(user_id).get({
-    username: req.body.username
-  })
+  const nameProfile = await profile
+    .where('userId', '==', user_id)
+    .get('username')
 
-  console.log('NAME: ', name)
+  console.log('NAME: ', nameProfile.docs)
 
-  res.status(200).json({ username: name})
+  res.status(200).json({ username: nameProfile})
 }

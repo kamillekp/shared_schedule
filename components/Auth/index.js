@@ -2,8 +2,7 @@ import * as React from 'react'
 import axios from 'axios'
 import {useState, useEffect, useContext} from "react"
 
-import firebase, {persistenceMode, getToken} from '../../config/firebase'
-
+import firebase, {persistenceMode} from '../../config/firebase'
 
 const AuthContext = React.createContext([{}, () => {}])
 
@@ -17,10 +16,6 @@ export const login = async ({email, password}) => {
 
     try {
         await firebase.auth().signInWithEmailAndPassword(email, password)
-
-        const result = (await takeProfile()).username
-        localStorage.setItem('username', result)
-
         return firebase.auth().currentUser
     }
     catch(error) {
@@ -45,24 +40,6 @@ export const signup = async ({email, password, username}) => {
     }
     catch (error) {
         console.log('SIGNUP ERROR: ', error)
-    }
-}
-
-export const takeProfile = async () => {
-    try {
-        const token = getToken
-        const data = await axios({
-            method: 'get',
-            url: '/api/takeProfile',
-            headers: {
-              'Authorization': `Bearer ${token}` 
-            }
-        })
-
-        return ({username: data.username})
-    }
-    catch (error) {
-        console.log('TAKEPROFILE ERROR: ', error)
     }
 }
 
